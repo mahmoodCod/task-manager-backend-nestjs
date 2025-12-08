@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import statusEnum from '../enums/statusEnum';
 
 @Entity({ name: 'project' })
 export class Project {
@@ -7,4 +8,7 @@ export class Project {
 
   @Column()
   name: string;
+
+  @Column({ type: 'enum', enum: statusEnum, default: statusEnum.Enable })
+  status: statusEnum;
 }
