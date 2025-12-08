@@ -1,0 +1,55 @@
+[1mdiff --git a/src/app.module.ts b/src/app.module.ts[m
+[1mindex ecb84a0..fc2c819 100644[m
+[1m--- a/src/app.module.ts[m
+[1m+++ b/src/app.module.ts[m
+[36m@@ -1,6 +1,7 @@[m
+ import { Module } from '@nestjs/common';[m
+ import { ProjectsModule } from './projects/projects.module';[m
+ import { TypeOrmModule } from '@nestjs/typeorm';[m
+[32m+[m[32mimport { TasksModule } from './tasks/tasks.module';[m
+ [m
+ @Module({[m
+   imports: [[m
+[36m@@ -15,6 +16,7 @@[m [mimport { TypeOrmModule } from '@nestjs/typeorm';[m
+       synchronize: true,[m
+     }),[m
+     ProjectsModule,[m
+[32m+[m[32m    TasksModule,[m[41m[m
+   ],[m
+ })[m
+ export class AppModule {}[m
+[1mdiff --git a/src/projects/entities/project.entity.ts b/src/projects/entities/project.entity.ts[m
+[1mindex f99f3c0..0aa1b68 100644[m
+[1m--- a/src/projects/entities/project.entity.ts[m
+[1m+++ b/src/projects/entities/project.entity.ts[m
+[36m@@ -1,5 +1,5 @@[m
+ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';[m
+[31m-import statusEnum from '../enums/statusEnum';[m
+[32m+[m[32mimport ProjectStatusEnum from '../enums/ProjectStatusEnum';[m[41m[m
+ [m
+ @Entity({ name: 'project' })[m
+ export class Project {[m
+[36m@@ -9,6 +9,10 @@[m [mexport class Project {[m
+   @Column()[m
+   name: string;[m
+ [m
+[31m-  @Column({ type: 'enum', enum: statusEnum, default: statusEnum.Enable })[m
+[31m-  status: statusEnum;[m
+[32m+[m[32m  @Column({[m[41m[m
+[32m+[m[32m    type: 'enum',[m[41m[m
+[32m+[m[32m    enum: ProjectStatusEnum,[m[41m[m
+[32m+[m[32m    default: ProjectStatusEnum.Enable,[m[41m[m
+[32m+[m[32m  })[m[41m[m
+[32m+[m[32m  status: ProjectStatusEnum;[m[41m[m
+ }[m
+[1mdiff --git a/src/projects/enums/statusEnum.ts b/src/projects/enums/statusEnum.ts[m
+[1mdeleted file mode 100644[m
+[1mindex 8da6bbc..0000000[m
+[1m--- a/src/projects/enums/statusEnum.ts[m
+[1m+++ /dev/null[m
+[36m@@ -1,5 +0,0 @@[m
+[31m-enum statusEnum {[m
+[31m-  Enable = 'enable',[m
+[31m-  Disable = 'disable',[m
+[31m-}[m
+[31m-export default statusEnum;[m
