@@ -65,7 +65,15 @@ export class ProjectsService {
     return this.projectRepository.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(id: number) {
+    const product = await this.projectRepository.findOneBy({ id });
+
+    if (!product) {
+      throw new NotFoundException(`Product ${id} not found !!`);
+    }
+
+    const removeProduct = await this.projectRepository.delete(id);
+
+    return removeProduct;
   }
 }
