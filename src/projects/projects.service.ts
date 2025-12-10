@@ -57,7 +57,7 @@ export class ProjectsService {
     const project = await this.projectRepository.findOneBy({ id });
 
     if (!project) {
-      throw new NotFoundException('Product not found !!');
+      throw new NotFoundException(`Product ${id} not found !!`);
     }
 
     await this.projectRepository.update(id, updateProjectDto);
