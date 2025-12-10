@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import TaskStatusEnum from '../enums/taskStatusEnum';
+import TaskStatusEnum from '../enums/TaskStatusEnum';
 import { Project } from 'src/projects/entities/project.entity';
 
 @Entity({ name: 'tasks' })

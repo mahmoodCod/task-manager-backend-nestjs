@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { IsEnum, IsString } from 'class-validator';
 import ProjectStatusEnum from '../enums/ProjectStatusEnum';
 
 export class CreateProjectDto {
-  name!: string;
+  @IsString()
+  name: string;
 
-  status!: ProjectStatusEnum;
+  @IsEnum(ProjectStatusEnum)
+  status: ProjectStatusEnum;
 }

@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 export class ProjectsService {
   constructor(
     @InjectRepository(Project)
-    private readonly projectRepository: Repository<Project>,
+    private readonly projectRepository: Repository<Project>
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {

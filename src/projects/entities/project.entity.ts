@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import ProjectStatusEnum from '../enums/ProjectStatusEnum';
 import { Task } from 'src/tasks/entities/task.entity';
 
-@Entity({ name: 'projects' })
+@Entity({ name: 'project' })
 export class Project {
   @PrimaryGeneratedColumn()
   id: number;
