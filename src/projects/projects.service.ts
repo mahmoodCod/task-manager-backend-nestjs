@@ -10,7 +10,7 @@ import ProjectStatusEnum from './enums/ProjectStatusEnum';
 export class ProjectsService {
   constructor(
     @InjectRepository(Project)
-    private readonly projectRepository: Repository<Project>
+    private readonly projectRepository: Repository<Project>,
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -26,8 +26,8 @@ export class ProjectsService {
   async findAll(status?: ProjectStatusEnum) {
     const query = this.projectRepository.createQueryBuilder('projects');
 
-    if(status) {
-      query.where('status = :x', { x: status })
+    if (status) {
+      query.where('status = :status', { status });
     }
 
     return await query.getMany();
