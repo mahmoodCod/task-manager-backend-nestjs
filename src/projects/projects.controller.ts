@@ -10,6 +10,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import ProjectStatusEnum from './enums/ProjectStatusEnum';
 
 @Controller('projects')
 export class ProjectsController {
@@ -22,7 +23,7 @@ export class ProjectsController {
 
   @Get()
   findAll() {
-    return this.projectsService.findAll();
+    return this.projectsService.findAll(ProjectStatusEnum.Disable);
   }
 
   @Get(':id')
