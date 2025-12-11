@@ -82,7 +82,15 @@ export class TasksService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number) {
+    const task = await this.taskRepository.findOneBy({ id });
+
+    if (!task) {
+      throw new NotFoundException(`Task ${id} not found !!`);
+    }
+
+    const removeTask = await this.taskRepository.delete(id);
+
+    return removeTask;
   }
 }
