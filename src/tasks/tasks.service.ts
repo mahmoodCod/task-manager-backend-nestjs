@@ -46,7 +46,7 @@ export class TasksService {
       .leftJoinAndSelect('task.project', 'project');
 
     if (status) {
-      query.where('status = :status', { status });
+      query.where('tasks.status = :status', { status });
     }
 
     query.skip((page - 1) * limit).take(limit);
