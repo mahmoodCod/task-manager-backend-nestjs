@@ -67,8 +67,16 @@ export class TasksService {
     return task;
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    const updateTask = await this.taskRepository.findOneBy({ id });
+
+    if (!updateTask) {
+      throw new NotFoundException(`Task ${id} not found !!`);
+    }
+
+    await this.taskRepository.update(id, updateTaskDto);
+
+    return this.taskRepository.findOneBy({ id });
   }
 
   remove(id: number) {
