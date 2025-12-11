@@ -56,8 +56,17 @@ export class TasksController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(+id, updateTaskDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+    @Res() res: Response,
+  ) {
+    const updateTask = await this.tasksService.update(+id, updateTaskDto);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: updateTask,
+      message: 'Task updated successfully :))',
+    });
   }
 
   @Delete(':id')
