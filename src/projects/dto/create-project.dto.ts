@@ -3,7 +3,7 @@ import { IsEnum, IsString, MaxLength, MinLength } from 'class-validator';
 import ProjectStatusEnum from '../enums/ProjectStatusEnum';
 
 export class CreateProjectDto {
-  @IsString()
+  @IsString({ message: 'Name is required' })
   @MinLength(3)
   @MaxLength(15)
   name: string;
