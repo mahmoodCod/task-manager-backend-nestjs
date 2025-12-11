@@ -49,8 +49,13 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res: Response) {
+    const getProject = await this.projectsService.findOne(+id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: getProject,
+      message: 'Projects get successfully :))',
+    });
   }
 
   @Patch(':id')
