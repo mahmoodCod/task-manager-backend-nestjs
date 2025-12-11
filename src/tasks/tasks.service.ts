@@ -54,8 +54,14 @@ export class TasksService {
     return await query.getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  async findOne(id: number) {
+    const task = await this.taskRepository.findOneBy({ id });
+
+    if (!task) {
+      throw new NotFoundException(`Task ${id} not found !!`);
+    }
+
+    return task;
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {

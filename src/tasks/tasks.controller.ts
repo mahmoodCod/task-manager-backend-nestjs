@@ -46,8 +46,13 @@ export class TasksController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res: Response) {
+    const getTask = await this.tasksService.findOne(+id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: getTask,
+      message: 'Task get successfully :))',
+    });
   }
 
   @Patch(':id')
