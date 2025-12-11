@@ -70,7 +70,12 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    const removeTask = await this.tasksService.remove(+id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: removeTask,
+      message: 'Task removed successfully :))',
+    });
   }
 }
