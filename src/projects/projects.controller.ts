@@ -76,7 +76,12 @@ export class ProjectsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.projectsService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    const removeProject = await this.projectsService.remove(+id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: removeProject,
+      message: 'Projects removed successfully :))',
+    });
   }
 }
