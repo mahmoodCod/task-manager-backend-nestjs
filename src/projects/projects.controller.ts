@@ -21,8 +21,16 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
-  create(@Body() createProjectDto: CreateProjectDto) {
-    return this.projectsService.create(createProjectDto);
+  async create(
+    @Body() createProjectDto: CreateProjectDto,
+    @Res() res: Response,
+  ) {
+    const createProject = await this.projectsService.create(createProjectDto);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: createProject,
+      message: 'Projects created successfully :))',
+    });
   }
 
   @Get()
@@ -36,7 +44,7 @@ export class ProjectsController {
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
       data: projects,
-      message: 'Projects found!',
+      message: 'Projects all successfully :))',
     });
   }
 
