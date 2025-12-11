@@ -76,7 +76,10 @@ export class TasksService {
 
     await this.taskRepository.update(id, updateTaskDto);
 
-    return this.taskRepository.findOneBy({ id });
+    return this.taskRepository.findOne({
+      where: { id },
+      relations: ['project'],
+    });
   }
 
   remove(id: number) {
