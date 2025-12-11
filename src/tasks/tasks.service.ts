@@ -1,11 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Task } from './entities/task.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TasksService {
-  create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+  constructor(
+    @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>,
+  ) {}
+
+  async create(createTaskDto: CreateTaskDto): Promise<Task> {
+    try {
+      const createTask = this.taskRepository.create(createTaskDto);
+
+      return await this.taskRepository.save(createTask);
+    } catch (error) {
+      throw new BadRequestException('Error created project!!');
+    }
   }
 
   findAll() {
