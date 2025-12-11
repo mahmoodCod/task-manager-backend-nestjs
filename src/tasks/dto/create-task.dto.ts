@@ -23,4 +23,7 @@ export class CreateTaskDto {
   @IsEnum(TaskStatusEnum)
   @IsOptional()
   status: TaskStatusEnum;
+
+  @IsNotEmpty({ message: 'ProjectId is required' })
+  projectId: number;
 }

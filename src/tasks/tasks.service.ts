@@ -1,20 +1,37 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm';
+import { Project } from 'src/projects/entities/project.entity';
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task)
     private readonly taskRepository: Repository<Task>,
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
   ) {}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
     try {
-      const createTask = this.taskRepository.create(createTaskDto);
+      const { projectId, ...taskData } = createTaskDto;
+
+      const project = await this.projectRepository.findOneBy({ id: projectId });
+
+      if (!project) {
+        throw new NotFoundException('Project not found !!');
+      }
+      const createTask = this.taskRepository.create({
+        ...taskData,
+        project,
+      });
 
       return await this.taskRepository.save(createTask);
     } catch (error) {
